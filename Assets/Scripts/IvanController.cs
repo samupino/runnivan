@@ -13,8 +13,7 @@ public class IvanController : MonoBehaviour
         RUN, JUMP, DOUBLE_JUMP, DUCK, DEAD
     };
 
-    State state;
-
+    
     Rigidbody2D rigidbody2d;
 
     public float jumpForce;
@@ -39,6 +38,33 @@ public class IvanController : MonoBehaviour
 
     static int terrainLayer;
 
+    State _state;
+    State state
+    {
+        get { return _state; }
+        set
+        {
+            switch (value)
+            {
+                case State.RUN:
+                    colliderManager.SetColliderDimensionsTo(_collider, "default");
+                    break;
+                case State.JUMP:
+                    animator.SetTrigger("jump");
+                    break;
+                case State.DOUBLE_JUMP:
+                    animator.SetTrigger("doubleJump");
+                    break;
+                case State.DUCK:
+                    colliderManager.SetColliderDimensionsTo(_collider, "duck");
+                    break;
+                default: break;
+            }
+            _state = value;
+        }
+    }
+
+
     void Awake()
     {
         terrainLayer = LayerMask.NameToLayer("Terrain");
@@ -48,8 +74,6 @@ public class IvanController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        state = State.RUN;
-
         rigidbody2d = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
         colliderManager = GetComponent<BoxColliderManager>();
@@ -62,6 +86,8 @@ public class IvanController : MonoBehaviour
         footstepAudioSource.Play();
         oneShotAudioSource = audioSources[1];
         oneShotAudioSource.loop = false;
+
+        state = State.RUN;
     }
 
     // Update is called once per frame
@@ -81,12 +107,10 @@ public class IvanController : MonoBehaviour
                     rigidbody2d.velocity = Vector2.up * jumpForce;
                     PlaySound(jumpAudio);
                     state = State.JUMP;
-                    animator.SetTrigger("jump");
                 }
                 else if (isDuckDown)
                 {
                     state = State.DUCK;
-                    colliderManager.SetColliderDimensionsTo(_collider, "duck");
                 }
                 footstepAudioSource.enabled = true;
                 break;
@@ -96,7 +120,7 @@ public class IvanController : MonoBehaviour
                     rigidbody2d.velocity = Vector2.up * doubleJumpForce;
                     PlaySound(jumpAudio);
                     state = State.DOUBLE_JUMP;
-                    animator.SetTrigger("doubleJump");
+
                 }
                 footstepAudioSource.enabled = false;
                 break;
@@ -108,7 +132,6 @@ public class IvanController : MonoBehaviour
                 if (!isDuckDown)
                 {
                     state = State.RUN;
-                    colliderManager.SetColliderDimensionsTo(_collider, "default");
                 }
                 break;
             case State.DEAD:
