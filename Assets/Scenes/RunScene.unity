@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 423960696}
   - component: {fileID: 423960695}
   - component: {fileID: 423960694}
+  - component: {fileID: 423960698}
   m_Layer: 0
   m_Name: ivan
   m_TagString: Untagged
@@ -161,7 +162,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -180,7 +181,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14903653, y: 1.1806421}
+  m_Offset: {x: -0.1, y: 0.75}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -191,7 +192,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.7651379, y: 2.245367}
+  m_Size: {x: 2, y: 1.4}
   m_EdgeRadius: 0
 --- !u!212 &423960692
 SpriteRenderer:
@@ -284,7 +285,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423960689}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -380,7 +381,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423960689}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -481,10 +482,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb631d76bab37fd4cb513cb0cb4cdcc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 10
-  doubleJumpForce: 5
+  jumpForce: 15
+  doubleJumpForce: 13
+  duckingHeightRatio: 0.6
   jumpAudio: {fileID: 0}
   footstepAudio: {fileID: 0}
+--- !u!114 &423960698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423960689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f65e6ad37ac4846899ba36f670be6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxes:
+  - name: default
+    offset: {x: -0.15, y: 1.2}
+    size: {x: 1.7, y: 2.3}
+  - name: duck
+    offset: {x: -0.1, y: 0.75}
+    size: {x: 2, y: 1.4}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +682,7 @@ GameObject:
   - component: {fileID: 1211144307}
   - component: {fileID: 1211144306}
   - component: {fileID: 1211144305}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: terrain_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

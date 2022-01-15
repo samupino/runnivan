@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxColliderManager))]
 public class IvanController : MonoBehaviour
 {
     public enum State
@@ -15,6 +19,15 @@ public class IvanController : MonoBehaviour
 
     public float jumpForce;
     public float doubleJumpForce;
+
+    BoxCollider2D _collider;
+    BoxColliderManager colliderManager;
+
+    public float duckingHeightRatio;
+    Vector2 defaultColliderSize;
+    Vector2 defaultColliderOffset;
+    Vector2 duckingColliderSize;
+    Vector2 duckingColliderOffset;
 
     Animator animator;
 
@@ -38,7 +51,8 @@ public class IvanController : MonoBehaviour
         state = State.RUN;
 
         rigidbody2d = GetComponent<Rigidbody2D>();
-
+        _collider = GetComponent<BoxCollider2D>();
+        colliderManager = GetComponent<BoxColliderManager>();
         animator = GetComponent<Animator>();
 
         audioSources = GetComponents<AudioSource>();
@@ -72,6 +86,7 @@ public class IvanController : MonoBehaviour
                 else if (isDuckDown)
                 {
                     state = State.DUCK;
+                    colliderManager.SetColliderDimensionsTo(_collider, "duck");
                 }
                 footstepAudioSource.enabled = true;
                 break;
@@ -93,6 +108,7 @@ public class IvanController : MonoBehaviour
                 if (!isDuckDown)
                 {
                     state = State.RUN;
+                    colliderManager.SetColliderDimensionsTo(_collider, "default");
                 }
                 break;
             case State.DEAD:
