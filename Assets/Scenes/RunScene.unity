@@ -132,8 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423960693}
-  - component: {fileID: 423960692}
   - component: {fileID: 423960697}
+  - component: {fileID: 423960692}
   - component: {fileID: 423960691}
   - component: {fileID: 423960690}
   - component: {fileID: 423960696}
@@ -268,7 +268,7 @@ Animator:
   m_GameObject: {fileID: 423960689}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e460f99092efcb46a33c31aa1bca533, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

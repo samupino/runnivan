@@ -24,6 +24,14 @@ public class IvanController : MonoBehaviour
     public AudioClip jumpAudio;
     public AudioClip footstepAudio;
 
+    static int terrainLayer;
+
+    void Awake()
+    {
+        terrainLayer = LayerMask.NameToLayer("Terrain");
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +54,10 @@ public class IvanController : MonoBehaviour
     void Update()
     {
         bool isJumpPressed = Input.GetKeyDown(KeyCode.UpArrow);
-        bool isDuckPressed = Input.GetKeyDown(KeyCode.DownArrow);
-        Debug.Log($"State: {state} | isJumpPressed: {isJumpPressed} | isDuckPressed: {isDuckPressed}");
+        bool isDuckDown = Input.GetKey(KeyCode.DownArrow);
+        Debug.Log($"State: {state} | isJumpPressed: {isJumpPressed} | isDuckPressed: {isDuckDown}");
+
+        animator.SetBool("isDuckDown", isDuckDown);
 
         switch (state)
         {
@@ -57,8 +67,9 @@ public class IvanController : MonoBehaviour
                     rigidbody2d.velocity = Vector2.up * jumpForce;
                     PlaySound(jumpAudio);
                     state = State.JUMP;
+                    animator.SetTrigger("jump");
                 }
-                else if (isDuckPressed)
+                else if (isDuckDown)
                 {
                     state = State.DUCK;
                 }
@@ -70,6 +81,7 @@ public class IvanController : MonoBehaviour
                     rigidbody2d.velocity = Vector2.up * doubleJumpForce;
                     PlaySound(jumpAudio);
                     state = State.DOUBLE_JUMP;
+                    animator.SetTrigger("doubleJump");
                 }
                 footstepAudioSource.enabled = false;
                 break;
@@ -78,6 +90,10 @@ public class IvanController : MonoBehaviour
                 break;
             case State.DUCK:
                 footstepAudioSource.enabled = true;
+                if (!isDuckDown)
+                {
+                    state = State.RUN;
+                }
                 break;
             case State.DEAD:
                 footstepAudioSource.enabled = false;
@@ -93,14 +109,24 @@ public class IvanController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log("OnCollisionEnter2D");
+        int layer = col.gameObject.layer;
+        if (layer == terrainLayer)
+        {
+            OnTerrainCollision();
+        }
+    }
+
+    void OnTerrainCollision()
+    {
         switch (state)
         {
             case State.JUMP:
                 state = State.RUN;
+                animator.SetTrigger("land");
                 break;
             case State.DOUBLE_JUMP:
                 state = State.RUN;
+                animator.SetTrigger("land");
                 break;
             default: break;
         }
