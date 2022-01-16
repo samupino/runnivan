@@ -5,14 +5,14 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     [HideInInspector]
-    public SpeedManager speedManager;
+    public SpeedController speedController;
 
     public float deathXDistance;
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 newPosition = transform.position + Vector3.left * speedManager.currentSpeed * Time.deltaTime;
+        Vector3 newPosition = transform.position + Vector3.left * speedController.currentSpeed * Time.deltaTime;
         transform.position = newPosition;
 
         if (transform.position.x < deathXDistance)

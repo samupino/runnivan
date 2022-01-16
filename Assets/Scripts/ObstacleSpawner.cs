@@ -5,7 +5,8 @@ using UnityEngine;
 public class ObstacleSpawner : MonoBehaviour
 {
 
-    public SpeedManager speedManager;
+    [HideInInspector]
+    public SpeedController speedController;
     
     public float spawnRadiusY;
 
@@ -22,6 +23,6 @@ public class ObstacleSpawner : MonoBehaviour
             Quaternion.identity
         );
 
-        obstacle.speedManager = speedManager;
+        obstacle.speedController = speedController;
     }
 }

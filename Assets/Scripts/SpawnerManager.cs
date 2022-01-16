@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnerManager : MonoBehaviour
 {
 
-    public SpeedManager speedManager;
+    public SpeedController speedController;
 
     public float minSpawnDelay;
     public float maxSpawnDelay;
@@ -18,11 +18,17 @@ public class SpawnerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (speedController == null)
+        {
+            throw new System.NullReferenceException("SpeedController is required in SpawnerManager");
+        }
+        
         nextObstacleTimer = Random.Range(minSpawnDelay, maxSpawnDelay);
         weights = new float[spawners.Length];
-        for (int i = 0; i< spawners.Length; i++)
+        for (int i = 0; i < spawners.Length; i++)
         {
             weights[i] = spawners[i].weight;
+            spawners[i].spawner.speedController = speedController;
         }
     }
 
