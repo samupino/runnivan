@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -13,7 +14,7 @@ public class IvanController : MonoBehaviour
         RUN, JUMP, DOUBLE_JUMP, DUCK, DEAD
     };
 
-    
+
     Rigidbody2D rigidbody2d;
 
     public float jumpForce;
@@ -37,6 +38,7 @@ public class IvanController : MonoBehaviour
     public AudioClip footstepAudio;
 
     static int terrainLayer;
+    static int obstacleLayer;
 
     State _state;
     State state
@@ -68,6 +70,7 @@ public class IvanController : MonoBehaviour
     void Awake()
     {
         terrainLayer = LayerMask.NameToLayer("Terrain");
+        obstacleLayer = LayerMask.NameToLayer("Obstacle");
     }
 
 
@@ -95,7 +98,6 @@ public class IvanController : MonoBehaviour
     {
         bool isJumpPressed = Input.GetKeyDown(KeyCode.UpArrow);
         bool isDuckDown = Input.GetKey(KeyCode.DownArrow);
-        Debug.Log($"State: {state} | isJumpPressed: {isJumpPressed} | isDuckPressed: {isDuckDown}");
 
         animator.SetBool("isDuckDown", isDuckDown);
 
@@ -155,6 +157,15 @@ public class IvanController : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        int layer = col.gameObject.layer;
+        if (layer == obstacleLayer)
+        {
+            OnObstacleCollision();
+        }
+    }
+
     void OnTerrainCollision()
     {
         switch (state)
@@ -169,5 +180,10 @@ public class IvanController : MonoBehaviour
                 break;
             default: break;
         }
+    }
+
+    void OnObstacleCollision()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
