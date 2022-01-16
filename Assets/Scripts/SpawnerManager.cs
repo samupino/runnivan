@@ -22,7 +22,7 @@ public class SpawnerManager : MonoBehaviour
         {
             throw new System.NullReferenceException("SpeedController is required in SpawnerManager");
         }
-        
+
         nextObstacleTimer = Random.Range(minSpawnDelay, maxSpawnDelay);
         weights = new float[spawners.Length];
         for (int i = 0; i < spawners.Length; i++)
@@ -35,6 +35,8 @@ public class SpawnerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (speedController.currentSpeed == 0) return;
+        
         nextObstacleTimer -= Time.deltaTime;
 
         if (nextObstacleTimer <= 0)

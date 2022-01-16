@@ -14,6 +14,7 @@ public class IvanController : MonoBehaviour
         RUN, JUMP, DOUBLE_JUMP, DUCK, DEAD
     };
 
+    public GameController gameController;
 
     Rigidbody2D rigidbody2d;
 
@@ -59,6 +60,10 @@ public class IvanController : MonoBehaviour
                     break;
                 case State.DUCK:
                     colliderManager.SetColliderDimensionsTo(_collider, "duck");
+                    break;
+                case State.DEAD:
+                    animator.SetTrigger("die");
+                    gameController.Die();
                     break;
                 default: break;
             }
@@ -184,6 +189,6 @@ public class IvanController : MonoBehaviour
 
     void OnObstacleCollision()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        state = State.DEAD;
     }
 }

@@ -5,20 +5,9 @@ using UnityEngine.UI;
 
 public class ScoreController : MonoBehaviour
 {
-    public Text currentScoreText;
-
     public int pointsPerSecond;
 
-    float _currentScore;
-    public float currentScore
-    {
-        get { return _currentScore; }
-        set
-        {
-            _currentScore = value;
-            currentScoreText.text = currentScore.ToString("n0");
-        }
-    }
+    public float currentScore;
 
     // Start is called before the first frame update
     void Start()
