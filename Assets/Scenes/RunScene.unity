@@ -465,7 +465,7 @@ MonoBehaviour:
   speedManager: {fileID: 248913744}
   spawnRadiusY: 2
   obstacles:
-  - {fileID: 548212693993969138, guid: 74ad9e0f678c1084e98ea3cbd5fe2c0b, type: 3}
+  - {fileID: 8101244200155055161, guid: 74ad9e0f678c1084e98ea3cbd5fe2c0b, type: 3}
 --- !u!4 &396985626
 Transform:
   m_ObjectHideFlags: 0
@@ -859,10 +859,10 @@ MonoBehaviour:
   boxes:
   - name: default
     offset: {x: 0, y: 0.9}
-    size: {x: 1.1, y: 1.75}
+    size: {x: 0.9, y: 1.75}
   - name: duck
     offset: {x: 0, y: 0.6}
-    size: {x: 1.4, y: 1.1}
+    size: {x: 1.2, y: 1.1}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,7 +1543,7 @@ MonoBehaviour:
   speedManager: {fileID: 248913744}
   spawnRadiusY: 0
   obstacles:
-  - {fileID: 330413395747218495, guid: a6067f0ee9dd4e0448f08843514de425, type: 3}
+  - {fileID: 7676772704230556652, guid: a6067f0ee9dd4e0448f08843514de425, type: 3}
 --- !u!4 &1967635993
 Transform:
   m_ObjectHideFlags: 0
