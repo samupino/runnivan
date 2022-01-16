@@ -22,17 +22,14 @@ public class HorizontalScroll : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float newX = transform.position.x - speedController.currentSpeed * Time.deltaTime * speedMultiplier;
+        Vector3 positionDelta = Vector3.left * speedController.currentSpeed * Time.deltaTime * speedMultiplier;
+        Vector3 newPosition = transform.position + positionDelta;
 
-        if (newX <= deathX)
+        if (newPosition.x <= deathX)
         {
-            newX += spawnX - deathX;
+            newPosition.x += spawnX - deathX;
         }
 
-        transform.position = new Vector3(
-            newX,
-            transform.position.y,
-            transform.position.z
-        );
+        transform.position = newPosition;
     }
 }
