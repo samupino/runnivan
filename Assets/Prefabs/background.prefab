@@ -123,5 +123,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedManager: {fileID: 0}
+  speedMultiplier: 0.1
   deathX: -24
   spawnX: 24

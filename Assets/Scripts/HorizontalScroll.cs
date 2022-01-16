@@ -9,6 +9,7 @@ public class HorizontalScroll : MonoBehaviour
     float initialPositionX;
 
     public SpeedManager speedManager;
+    public float speedMultiplier;
     public float deathX;
     public float spawnX;
 
@@ -21,7 +22,7 @@ public class HorizontalScroll : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float newX = transform.position.x - speedManager.currentSpeed * Time.deltaTime;
+        float newX = transform.position.x - speedManager.currentSpeed * Time.deltaTime * speedMultiplier;
 
         if (newX <= deathX)
         {
