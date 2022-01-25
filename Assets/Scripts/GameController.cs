@@ -6,14 +6,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(SpeedController))]
 [RequireComponent(typeof(ScoreController))]
 [RequireComponent(typeof(UIController))]
-public class GameController : MonoBehaviour
-{
-    public enum State
-    {
+public class GameController : MonoBehaviour {
+
+    public enum State {
         ADVANCING, OVER
     };
-
-
 
     SpeedController speedController;
     ScoreController scoreController;
@@ -22,8 +19,7 @@ public class GameController : MonoBehaviour
     State state;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         speedController = GetComponent<SpeedController>();
         scoreController = GetComponent<ScoreController>();
         uiController = GetComponent<UIController>();
@@ -34,15 +30,12 @@ public class GameController : MonoBehaviour
         uiController.UpdateLiveScore(0);
     }
 
-    void Update()
-    {
+    void Update() {
         uiController.UpdateLiveScore((int)scoreController.currentScore);
     }
 
-    public void Die()
-    {
-        switch (state)
-        {
+    public void Die() {
+        switch (state) {
             case State.ADVANCING:
                 speedController.Stop();
                 uiController.ShowGameOverScreen((int)scoreController.currentScore);

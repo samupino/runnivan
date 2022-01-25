@@ -7,10 +7,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(BoxColliderManager))]
-public class IvanController : MonoBehaviour
-{
-    public enum State
-    {
+public class IvanController : MonoBehaviour {
+
+    public enum State {
         RUN, JUMP, DOUBLE_JUMP, DUCK, DEAD
     };
 
@@ -42,13 +41,10 @@ public class IvanController : MonoBehaviour
     static int obstacleLayer;
 
     State _state;
-    State state
-    {
+    State state {
         get { return _state; }
-        set
-        {
-            switch (value)
-            {
+        set {
+            switch (value) {
                 case State.RUN:
                     colliderManager.SetColliderDimensionsTo(_collider, "default");
                     break;
@@ -72,16 +68,14 @@ public class IvanController : MonoBehaviour
     }
 
 
-    void Awake()
-    {
+    void Awake() {
         terrainLayer = LayerMask.NameToLayer("Terrain");
         obstacleLayer = LayerMask.NameToLayer("Obstacle");
     }
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         rigidbody2d = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
         colliderManager = GetComponent<BoxColliderManager>();
@@ -99,31 +93,26 @@ public class IvanController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         bool isJumpPressed = Input.GetKeyDown(KeyCode.UpArrow);
         bool isDuckDown = Input.GetKey(KeyCode.DownArrow);
 
         animator.SetBool("isDuckDown", isDuckDown);
 
-        switch (state)
-        {
+        switch (state) {
             case State.RUN:
-                if (isJumpPressed)
-                {
+                if (isJumpPressed) {
                     rigidbody2d.velocity = Vector2.up * jumpForce;
                     PlaySound(jumpAudio);
                     state = State.JUMP;
                 }
-                else if (isDuckDown)
-                {
+                else if (isDuckDown) {
                     state = State.DUCK;
                 }
                 footstepAudioSource.enabled = true;
                 break;
             case State.JUMP:
-                if (isJumpPressed)
-                {
+                if (isJumpPressed) {
                     rigidbody2d.velocity = Vector2.up * doubleJumpForce;
                     PlaySound(jumpAudio);
                     state = State.DOUBLE_JUMP;
@@ -136,8 +125,7 @@ public class IvanController : MonoBehaviour
                 break;
             case State.DUCK:
                 footstepAudioSource.enabled = true;
-                if (!isDuckDown)
-                {
+                if (!isDuckDown) {
                     state = State.RUN;
                 }
                 break;
@@ -148,33 +136,26 @@ public class IvanController : MonoBehaviour
         }
     }
 
-    public void PlaySound(AudioClip clip)
-    {
+    public void PlaySound(AudioClip clip) {
         oneShotAudioSource.PlayOneShot(clip);
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
+    void OnCollisionEnter2D(Collision2D col) {
         int layer = col.gameObject.layer;
-        if (layer == terrainLayer)
-        {
+        if (layer == terrainLayer) {
             OnTerrainCollision();
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
+    void OnTriggerEnter2D(Collider2D col) {
         int layer = col.gameObject.layer;
-        if (layer == obstacleLayer)
-        {
+        if (layer == obstacleLayer) {
             OnObstacleCollision();
         }
     }
 
-    void OnTerrainCollision()
-    {
-        switch (state)
-        {
+    void OnTerrainCollision() {
+        switch (state) {
             case State.JUMP:
                 state = State.RUN;
                 animator.SetTrigger("land");
@@ -187,8 +168,7 @@ public class IvanController : MonoBehaviour
         }
     }
 
-    void OnObstacleCollision()
-    {
+    void OnObstacleCollision() {
         state = State.DEAD;
     }
 }
